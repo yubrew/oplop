@@ -1,40 +1,43 @@
-'use strict';
+$(function() {
+    'use strict';
 
-define(['jquery', 'oplop/impl', 'oplop/ui'], function($, impl, ui) {
-  $(function() {
     /* For smooth transitions between screens, don't use any. */
     $.mobile.defaultPageTransition = 'none';
 
-    ui.disableIOSAutoStuff($('input'), $('input[type="password"]'));
+    oplop.ui.disableIOSAutoStuff($('input'), $('input[type="password"]'));
 
     /* When "New Nickname" checkbox is clicked ... */
     var newNicknameData = {checkbox: $('#newNicknameContainer'),
                            passwordField: $('#validateMasterPassword')};
     $('#newNickname').click(newNicknameData,
-                            ui.displayValidateMasterPassword);
+                            oplop.ui.displayValidateMasterPassword);
 
     /* When "Create account password" is clicked ... */
-    var accountPasswordData = {nickname: $('#nickname'),
-                               newNickname: $('#newNickname'),
-                               masterPassword: $('#masterPassword'),
-                               masterPasswordAgain: $('#validateMasterPassword'),
-                               accountPasswordField: $('#accountPassword')};
-    $('#createAccountPassword').click(accountPasswordData,
-                                      ui.createAccountPassword);
+    $('#createAccountPassword').on('click', function(e){
+        e.preventDefault();
+        e.data = { 
+          nickname: $('#nickname'),
+          newNickname: $('#newNickname'),
+          masterPassword: $('#masterPassword'),
+          masterPasswordAgain: $('#validateMasterPassword'),
+          accountPasswordField: $('#accountPassword'),
+          useStrongerPassword: $('#useStrongerPassword').prop('checked')
+        };
+        oplop.ui.createAccountPassword(e);
+      });
 
     /* When "Start Over" is clicked ... */
-    $('.startOver').click(window, ui.startOver);
+    $('.startOver').click(window, oplop.ui.startOver);
 
     /* Pre-populate "Link to nickname". */
-    impl.getStorage(ui.nicknamesLinkKey, function(items) {
-        var href = items[ui.nicknamesLinkKey];
+    oplop.impl.getStorage(oplop.ui.nicknamesLinkKey, function(items) {
+        var href = items[oplop.ui.nicknamesLinkKey];
         if (href) {
             $('#nicknamesLink')[0].value = href;
-            ui.setNicknamesLink(href);
+            oplop.ui.setNicknamesLink(href);
     }
     });
 
     /* When something changes in "Link to nickname" ... */
-    $('#nicknamesLink').change(ui.changedNicknamesLink);
-  });
+    $('#nicknamesLink').change(oplop.ui.changedNicknamesLink);
 });

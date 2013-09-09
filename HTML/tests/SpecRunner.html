@@ -5,18 +5,10 @@
   <title>Oplop Spec Runner</title>
 
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.3.1/jasmine_favicon.png">
-  <!-- AMD loading -->
-  <script src="../assets/tAMD-0.1.0/define.js"></script>
-  <script src="../assets/tAMD-0.1.0/hooks.js"></script>
-  <script src="amd-testing.js"></script>
-
-  <!-- Jasmine -->
   <link rel="stylesheet" type="text/css" href="lib/jasmine-1.3.1/jasmine.css">
   <script type="text/javascript" src="lib/jasmine-1.3.1/jasmine.js"></script>
-  <script type="text/javascript" src="lib/jasmine-1.3.1/jasmine-html.js">
-  </script>
+  <script type="text/javascript" src="lib/jasmine-1.3.1/jasmine-html.js"></script>
   <script src="lib/jasmine-jquery-1.5.8.js"></script>
-  <script src="lib/jasmine-amd.js"></script>
 
   <!-- include source files here... -->
   <script src="../assets/jquery.mobile/jquery-1.10.2.min.js"></script>
@@ -31,7 +23,7 @@
   <script src="specs/uiSpec.js"></script>
 
   <script type="text/javascript">
-    define(['jasmine/html'], function(jasmine) {
+    (function() {
       var jasmineEnv = jasmine.getEnv();
       jasmineEnv.updateInterval = 1000;
 
@@ -56,7 +48,7 @@
         jasmineEnv.execute();
       }
 
-    });
+    })();
   </script>
 
 </head>
